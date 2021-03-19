@@ -8,6 +8,6 @@ A sum of python scripts and C++ scripts to attach for embedded solutions on TFLi
 
 
 # Who's who?
-_/python_ : Python scripts to run to analyze data cought from the hooks running in a specific mode. Read more inside
+_/python_ : Python scripts to run to analyze data cought from the hooks running in a specific mode. Read more inside.
 
-_C_ : _.cc_ and _.h_ to include to enable custom malloc(), free() hooks on newlib. Read more inside.
+_/C_ : _.cc_ and _.h_ to include to enable custom malloc(), free() hooks on newlib. Read more inside.
