@@ -6,6 +6,10 @@ Use to get more information on the required inputs:
 ```
 If the commands are not supported /not found in terminal under linux, please check how to setup _chmod_.
 
+datasheet.xlsx & datasheet_new.xlsx template datasheets and can be used respectively.
+
+To create a new datasheet, copy the mapping from the hook "pretty_print" in the terminal into a sheet editor.
+
 Setup a correspondant venv python env and replace. Needed modules are (Use pip to install):
 - matplotlib
 - pandas 
