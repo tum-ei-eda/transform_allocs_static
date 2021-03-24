@@ -3,8 +3,14 @@ Use to get more information on the required inputs:
 ```
 ./id_sep.py --help 
 ./ptr_total.py --help 
+./offseter.py --help
 ```
-If the commands are not supported /not found in terminal under linux, please check how to setup _chmod_.
+If the commands are not supported/not found in terminal under linux, please check how to setup _chmod_.
+
+This would also work:
+```
+<path_to_venv_python3.7> /<py_file.py> --args
+```
 
 _datasheet.xlsx_ & _datasheet_new.xlsx_ template datasheets can be used respectively.
 
@@ -29,4 +35,4 @@ The plots from this script give a better prespective on the allocated pointers. 
 
 # offseter.py
 Return offset in two different methods from datasheet used on **ptr_total.py**. 
-Comments inside script explain the goal of every method.
+Comments inside script explain the point of every method.

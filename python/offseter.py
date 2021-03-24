@@ -1,6 +1,11 @@
-#!/home/osm/Documents/EI-EDA/ml_on_mcu/venv/bin/python3.7
+#!/home/osm/Documents/EI-EDA/ml_on_mcu/venv/bin/python3.7 
+#Change the venv path above.
 
 # Add offset to a given datasheet.
+# Two methods : 
+#   - Give offset for every ID (every malloc call) --> MORE Memory
+#   - Give offset for every pointer (every container) -->Less Memory.
+# Datasheet format:
 # ID2.0|Size|firstAlloc|lastFree|Pointer
 
 import argparse
@@ -22,32 +27,32 @@ def offseter(df):
     #Use buffer for every malloc call with appropriate size.
     global_size= 0 
     for index, row in df.iterrows():
+        df.loc[index,'Offset_1']= global_size
         global_size+=row['Size']
-        df.loc[index,'Offset_1']= hex((int(cell_ref,16))+global_size) #Check this hex +int ?..
     output_string =''
     for off in df['Offset_1']:
-        output_string+=off+","
+        output_string+=str(off)+","
 
     #pretty print for hook
     print('=============================OFFSET_1==================================')
     print(output_string[:len(output_string)-1])
     print("Global Size required: ",global_size)
-    print('===============================================================')
+    print('=============================OFFSET_2==================================')
 
     #Use buffer for each unique pointer with appropriate size.
     max_mem = 0 
     for i in df['Pointer'].unique():
         df_current = df[df['Pointer'] == i]
+        df.loc[(df.Pointer == i) , 'Offset_2'] = max_mem
         max_mem += df_current['Size'].max()
-        df.loc[(df.Pointer == i) , 'Offset_2'] = hex((int(cell_ref,16))+max_mem)
 
     #pretty print for hook 
     output_string =''
     for off in df['Offset_2']:
-        output_string+=off+","
+        output_string+=str(off)+","
     print(output_string[:len(output_string)-1])
     print("Global Size required: ",max_mem)
-    print('=============================OFFSET_2==================================')
+    
 
 
 def main ():
