@@ -2,7 +2,6 @@
 #define MALLOC_ARRAY_H_
 
 // Fill this data accordignly after running hooks in *Non* Static mode.
-
-extern const unsigned int malloc_array_size_data[];
-extern const int malloc_array_size_length;
-#endif // MALLOC_ARRAY_H_
+extern const int offset_data[];      // Offset data to get from python
+extern const unsigned int big_size;  // Final expected size of buffer.
+#endif                               // MALLOC_ARRAY_H_
