@@ -18,6 +18,10 @@ def import_sheet(path):
     df = df.set_index("ID2.0") 
     return df 
 
+def save_sheet(name,df):
+    df.to_excel(name[:len(name)-5]+"_updated.xlsx")
+
+
 def offseter(df):
     #reference adding base pointer
     cell_ref= df['Pointer'].min()
@@ -52,6 +56,8 @@ def offseter(df):
         output_string+=str(off)+","
     print(output_string[:len(output_string)-1])
     print("Global Size required: ",max_mem)
+    return df
+
     
 
 
@@ -62,9 +68,17 @@ def main ():
         help=
         "The path to a datasheet containing pointer lifetimes and sizes, make sure that the format respects the following layout: 'ID2.0|Size|firstAlloc|lastFree|Pointer' of types 'int|int|int|int|str'",
         type=str)
+    parser.add_argument(
+        "-s",
+        "--save_bool",
+        help=
+        "Saves the updated datasheet automatically into /datasheet_updated.xlsx. Defaults to False.",
+        action='store_true')
     args = parser.parse_args()
     df = import_sheet(args.input_sheet_file)
-    offseter(df)
+    df = offseter(df)
+    if (args.save_bool):
+        save_sheet(args.input_sheet_file,df)
 
 if __name__ == "__main__":
     main()
