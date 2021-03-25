@@ -26,6 +26,8 @@ This will call for malloc()/free() provided by the toolchain (The GNU C Library/
 | 2 | 32 | 2 | 15 | 0x130844 |
 | 3 | 512 | 3 | 53 | 0x130864 | 
 
+_PS: -1 means that the ID/Buffer upto the print time still did not get released, in python scripts this is automnatically set to the last time stamp in the run._
+
 2. **#define _STATIC_MALLOC**: 
 This will replace the malloc()/free() calls with a lookup function in a given malloc_array[]([Can be created here](../python/offseter.py)).
 
