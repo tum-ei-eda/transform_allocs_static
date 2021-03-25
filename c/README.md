@@ -20,7 +20,7 @@ As the hooks are designed in the purpose of avoiding dynamic memory allocations 
 This will call for malloc()/free() provided by the toolchain (The GNU C Library/Newlib ..), simply output a print after each call during runtime, and prvoide a mapping of every call to the correspondant pointer, size, and lifetime:
 
 | ID 2.0 | Size | firstAlloc | lastFree | Pointer |
-| --- | --- |
+| --- | --- | --- | --- | --- |
 | 0 | 20 | 0 | -1 | 0x1307c0 |
 | 1 | 112 | 1 | -1 | 0x1307d4 |
 | 2 | 32 | 2 | 15 | 0x130844 |
