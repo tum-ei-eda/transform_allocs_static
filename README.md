@@ -1,5 +1,5 @@
 # Description 
-A sum of python scripts and C++ scripts to attach for embedded solutions on TFLite to analyze dynamic and avoid memory allocations.
+A sum of python and C++ scripts to attach for embedded solutions on TFLite to analyze dynamic and avoid memory allocations.
 
 # Requirements
 - newlib (modified and compiled with extra hook options) !update link to fork/downloadables!
@@ -8,6 +8,6 @@ A sum of python scripts and C++ scripts to attach for embedded solutions on TFLi
 
 
 # Who's who?
-_/python_ : Python scripts to run to analyze data cought from the hooks running in a specific mode. Read more inside.
+_/python_ : Python scripts to run and analyze data cought from the hooks running in a specific mode. Read more inside.
 
 _/C_ : _.cc_ and _.h_ to include to enable custom malloc(), free() hooks on newlib. Read more inside.
