@@ -2,7 +2,7 @@
 
 # A python script to be ran from terminal.
 # Used to plot lifetime of pointers given from malloc/free hook's database.
-# Replace upper command with correspondant venv python exec. 
+# Replace upper command with correspondant venv python exec.
 
 import pandas as pd
 import matplotlib
@@ -13,6 +13,7 @@ from datetime import date
 from datetime import datetime
 import argparse
 import numpy as np
+from matplotlib.lines import Line2D
 
 
 def import_sheet(path):
@@ -33,10 +34,10 @@ def draw_lifetime(df, save, save_format, show_graph):
         print(current_time, ": Running loud..")
 
     fig = plt.figure(figsize=(30, 30))
-    j = 0 # simple loop counter 
+    j = 0  # simple loop counter
     plt.xticks(np.arange(0, df['lastFree'].max(), 10))
-
-    #Colormap configuration 
+    global_size = 0
+    #Colormap configuration
     viridis = cm.get_cmap('viridis', 256)
     newcolors = viridis(np.linspace(0, 1, 256))
     pink = np.array([248 / 256, 24 / 256, 148 / 256, 1])
@@ -50,28 +51,34 @@ def draw_lifetime(df, save, save_format, show_graph):
     newcolors[5:128, :] = goldenrod
     newcolors[128:, :] = grey
     newcmp = ListedColormap(newcolors)
+    #Clean the size for legends
+    df['Size_reduced'] = df['Size'] / df['Size'].mean()
+    if df.Size_reduced[df.Size_reduced < 1].count() > df.Size_reduced[
+            df.Size_reduced > 1].count():
+        df['Size_reduced'] += 1
 
     for i in df['Pointer'].unique():
         df_current = df[df['Pointer'] == i]
-        #plot lifetime 
-        plt.hlines(y=np.full(shape=df_current.shape[0], fill_value=j),
-                   xmin=df_current['firstAlloc'],
-                   xmax=df_current['lastFree'],
-                   label=i,
-                   linewidth=0.85,
-                   colors='black')
-        #plot sizes
-        plt.scatter(df_current['firstAlloc'],#!/home/osm/Documents/EI-EDA/ml_on_mcu/venv/bin/python3.7
-                    np.full(shape=df_current.shape[0], fill_value=j),
-                    alpha=0.8,
-                    label='Size',
-                    c=df['Size'][df['Pointer'] == i],
-                    cmap=newcmp,
-                    vmin=df['Size'].min(),
-                    vmax=df['Size'].max())
-        j = j + 1
+        #plot lifetime
+        ax0 = plt.hlines(y=np.full(shape=df_current.shape[0], fill_value=j),
+                         xmin=df_current['firstAlloc'],
+                         xmax=df_current['lastFree'],
+                         linewidth=0.85,
+                         colors='black')
 
-    plt.yticks(np.arange(0, j, 5))
+        #plot sizes
+        ax1 = plt.scatter(df_current['firstAlloc'],
+                          np.full(shape=df_current.shape[0], fill_value=j),
+                          alpha=0.8,
+                          label='Size',
+                          c=df['Size'][df['Pointer'] == i],
+                          cmap=newcmp,
+                          vmin=df['Size'].min(),
+                          vmax=df['Size'].max(),
+                          s=df['Size_reduced'][df['Pointer'] == i])
+        global_size += df['Size'][df['Pointer'] == i].max()
+        j = j + 1
+    plt.yticks(np.arange(0, j, 3))
     plt.tick_params(axis="x", rotation=-45)
     plt.title("Pointer lifetimes", size=20)
     plt.xlabel("Ticks")
@@ -85,16 +92,48 @@ def draw_lifetime(df, save, save_format, show_graph):
         int(128 / 256 * df['Size'].max()),
         int(256 / 256 * df['Size'].max())
     ])
-    if(save):
+    if (save):
         now = datetime.now()
         today = date.today()
         today.strftime("%b_%d_%Y")
         current_time = now.strftime("%H_%M_%S")
         output = "figs/id_" + str(current_time) + "_" + str(today)
-        plt.savefig(output + "."+save_format, bbox_inches='tight', dpi=100)
+        plt.savefig(output + "." + save_format, bbox_inches='tight', dpi=100)
         current_time = now.strftime("[%H:%M:%S]")
         print(current_time, ": Plot saved.")
-    if(not show_graph):
+    if (not show_graph):
+        #hard coded size legend
+        leg_elems = [
+            Line2D([0], [0],
+                   marker='o',
+                   color='w',
+                   label='Small ~ <250 ',
+                   markerfacecolor=pink,
+                   markersize=2),
+            Line2D([0], [0],
+                   marker='o',
+                   color='w',
+                   label='Medium ~ <1250',
+                   markerfacecolor=orchid,
+                   markersize=5),
+            Line2D([0], [0],
+                   marker='o',
+                   color='w',
+                   label='Big ~ >32000',
+                   markerfacecolor=grey,
+                   markersize=15),
+            Line2D([0], [0], color='black', label='Lifetime',
+                   markersize=0.085),
+            Line2D([0], [0],
+                   color='w',
+                   label=('Full allocated size : ' + str(global_size)+'Bytes'),
+                   markersize=0)
+        ]
+        plt.legend(handles=leg_elems,
+                   title='Size allocated',
+                   shadow=True,
+                   loc='upper left',
+                   fontsize='large')
         plt.show()
 
 
