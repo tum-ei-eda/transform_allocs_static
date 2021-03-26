@@ -27,7 +27,7 @@ Figures plotted are generated in /figs, if '-s' is given.
 # id_sep.py 
 Use this to plot **StatBufMapper** information from the hook process.
 
-The plots from this script give a better prespective on the allocated pointers. (Notice the colormap used). Please look into [/figs](/figs/id_17_43_26_2021-03-26.png) for an example
+The plots from this script give a better prespective on the allocated pointers. (Notice the colormap used). Please look into [/figs](/figs) for an example
 
 # offseter.py
 Return offset in two different methods from datasheet used on **ptr_total.py**. 
