@@ -1,4 +1,7 @@
 # Description 
+
+*Not finished*
+
 The two major custom tflite operators that needed these scripts come also bundled and modified for tensorflow lite micro.
 
 Though there isn't much changed, as most of the code is purely based on the theoretical side of the ops, these files have been used to test the hooks.
@@ -19,3 +22,17 @@ resolver.AddCustom("Mfcc", tflite::ops::custom::Register_MFCC());
 ```
 
 ## audio_spectrogram model 
+Model dump containing audio_spectrogram generated from xxd. (With output dimensions hard-coded)
+
+Input --> audio_spectrogram --> Output
+
+Include this into your main.cpp. 
+
+## audio_spectrogram + MFCC model
+Model dump containing audio_spectrogram and MFCC generated from xxd. (With output dimensions hard-coded)
+
+Input --> audio_spectrogram --> MFCC--> Output
+Input -->MFCC--------------------|
+
+Include this into your main.cpp. 
+
