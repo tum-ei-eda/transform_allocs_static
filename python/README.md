@@ -22,8 +22,9 @@ Copy all the content of the map (including the column names)
 
 ![step2](/pics/pic_3.png)
 Paste inside a Sheet editor of choice. 
+In LibreOffice, you can decide when each column starts and ends from the "Text Import" window.
+Spacing does not matter. The script will do the "clean-up".
 
-In LibreOffice, you can decide when each column starts and ends from the "Text Paste" window.
 ![step2_1](/pics/pic_4.png)
 ![step3](/pics/pic_5.png)
 Export as .xlsx file.
