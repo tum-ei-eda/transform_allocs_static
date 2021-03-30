@@ -17,15 +17,15 @@ _datasheet_new.xlsx_ template datasheet can be used respectively.
 
 ## How to make a datesheet
 To create a new datasheet, copy the mapping from the hook "pretty_print" in the terminal into a sheet editor, then export as _.xlsx as shown below:
-![step1](./pics/pic_2.png)
+![step1](/pics/pic_2.png)
 Copy all the content of the map (including the column names)
 
-![step2](./pics/pic_3.png)
+![step2](/pics/pic_3.png)
 Paste inside a Sheet editor of choice. 
 
 In LibreOffice, you can decide when each column starts and ends from the "Text Paste" window.
-![step2_1](./pics/pic_4.png)
-![step3](./pics/pic_5.png)
+![step2_1](/pics/pic_4.png)
+![step3](/pics/pic_5.png)
 Export as .xlsx file.
 
 ## How to setup venv
