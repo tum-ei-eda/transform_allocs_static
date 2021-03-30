@@ -12,16 +12,17 @@ import argparse
 import pandas as pd
 import numpy as np
 
+# Import the datasheet
 def import_sheet(path):
     df = pd.read_excel(path)
     df.columns = df.columns.str.replace(" ", "")  # Clean the datasheet
     df = df.set_index("ID2.0") 
     return df 
-
+# Save the datasheet
 def save_sheet(name,df):
     df.to_excel(name[:len(name)-5]+"_updated.xlsx")
 
-
+#Output offset array on terminal.
 def offseter(df):
     #reference adding base pointer
     cell_ref= df['Pointer'].min()
@@ -57,9 +58,6 @@ def offseter(df):
     print(output_string[:len(output_string)-1])
     print("Global Size required: ",max_mem)
     return df
-
-    
-
 
 def main ():
     parser = argparse.ArgumentParser()

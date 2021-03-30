@@ -15,7 +15,7 @@ import argparse
 import numpy as np
 from matplotlib.lines import Line2D
 
-
+# Import the datasheet
 def import_sheet(path):
     df = pd.read_excel(path)  #Import datasheet.
     df.columns = df.columns.str.replace(" ", "")  # Clean the datasheet
@@ -24,7 +24,7 @@ def import_sheet(path):
                            inplace=True)  # Clean -1 to be replaced with max.
     return df
 
-
+# Plot the graph 
 def draw_lifetime(df, save, save_format, show_graph):
     now = datetime.now()
     current_time = now.strftime("[%H:%M:%S]")
@@ -92,18 +92,8 @@ def draw_lifetime(df, save, save_format, show_graph):
         int(128 / 256 * df['Size'].max()),
         int(256 / 256 * df['Size'].max())
     ])
-    if (save):
-        now = datetime.now()
-        today = date.today()
-        today.strftime("%b_%d_%Y")
-        current_time = now.strftime("%H_%M_%S")
-        output = "figs/id_" + str(current_time) + "_" + str(today)
-        plt.savefig(output + "." + save_format, bbox_inches='tight', dpi=100)
-        current_time = now.strftime("[%H:%M:%S]")
-        print(current_time, ": Plot saved.")
-    if (not show_graph):
-        #hard coded size legend
-        leg_elems = [
+    #hard coded size legend
+    leg_elems = [
             Line2D([0], [0],
                    marker='o',
                    color='w',
@@ -129,11 +119,22 @@ def draw_lifetime(df, save, save_format, show_graph):
                    label=('Full allocated size : ' + str(global_size)+'Bytes'),
                    markersize=0)
         ]
-        plt.legend(handles=leg_elems,
+    plt.legend(handles=leg_elems,
                    title='Size allocated',
                    shadow=True,
                    loc='upper left',
                    fontsize='large')
+    #save if possible
+    if (save):
+        now = datetime.now()
+        today = date.today()
+        today.strftime("%b_%d_%Y")
+        current_time = now.strftime("%H_%M_%S")
+        output = "figs/id_" + str(current_time) + "_" + str(today)
+        plt.savefig(output + "." + save_format, bbox_inches='tight', dpi=100)
+        current_time = now.strftime("[%H:%M:%S]")
+        print(current_time, ": Plot saved.")
+    if (not show_graph):
         plt.show()
 
 
