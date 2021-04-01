@@ -23,14 +23,14 @@ _Still in testing_
 ## audio_spectrogram model 
 Model dump containing audio_spectrogram generated from xxd. (With output dimensions hard-coded)
 
-![audio_sepec](./pics/pic_8.png)
+![audio_sepec](/pics/pic_8.png)
 
 Include this into your main.cpp. 
 
 ## audio_spectrogram + MFCC model
 Model dump containing audio_spectrogram and MFCC generated from xxd. (With output dimensions hard-coded)
 
-![mfccandspec](./pics/pic_9.png)
+![mfccandspec](/pics/pic_9.png)
 
 Include this into your main.cpp. 
 
@@ -73,7 +73,7 @@ flatc -b schema_path  filename.json
 ```
 
 **Original Audio Spectrogram model before transformation:**
-![audio_sepec](./pics/pic_9.png)
+![audio_sepec](/pics/pic_9.png)
 
 5. Convert the model into hex:
 ```
