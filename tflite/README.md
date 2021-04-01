@@ -39,21 +39,21 @@ Include this into your main.cpp.
 ## Why it is needed?
 Looking into common.c for TFLite, an important command used as return in `<op_name>::Prepare()` is missing from TFLite Micro : **ResizeTensor**.
 
-Since most of the models will work on static and continous data streams, the output size of tensors inside models will not change. As a result, it is possible to "hard-code" these sizes into the model and evade `return context->ResizeTensor(...)`. The output size usually depends on the operator's parameters or the size of its input (this is generally known). Please make sure to research about the expected output size and type of the operators before changing the models. Otherwise, a test-run with an output->dims->size etc.. printing on Tensorflow Lite should give insight on the expected dims. 
+Since most of the models will work on static and continous data streams, the output size of tensors inside models will not change. As a result, it is possible to "hard-code" these sizes into the model and evade `return context->ResizeTensor(...)`. The output size usually depends on the operator's parameters or the size of its input (this is generally known). Please make sure to research about the expected output size and type of the operators before changing the models. Otherwise, a test-run with an `output->dims->size` etc.. printing on Tensorflow Lite should give insight on the expected dims. 
 
 
 ## How is it done?
 To change the models manually, Google/Flatbuffers offer a [schema compiler](https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html). 
 
-1. First, we train the model and export it as a .tflite binary file. More information [here](https://www.tensorflow.org/lite/guide/get_started)
-2. On your Operating System of choice, install [https://github.com/google/flatbuffers](https://github.com/google/flatbuffers). (Can be also installed as a [pk](https://packages.debian.org/sid/devel/flatbuffers-compiler)
+1. First, we train the model and export it as a `.tflite` binary file. More information [here](https://www.tensorflow.org/lite/guide/get_started)
+2. On your Operating System of choice, install [flatbuffers-compiler](https://github.com/google/flatbuffers). (Can also be installed as a [pkg](https://packages.debian.org/sid/devel/flatbuffers-compiler)
 . Transform the `.tflite` model into an easily understandble verbose language of choice. We use `.json`:
 ```
 flatc -t --strict -json  --defaults -json  schema_path  -- filename.tflite
 ```
-A `schema.fbs` for Tensorflow Lite can be found and downloaded here [here](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/schema/schema.fbs). Do not modify this file as it is used to "translate". 
+A `schema.fbs` for Tensorflow Lite can be found and downloaded [here](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/schema/schema.fbs). Do not modify this file as it is used to "translate". 
 
-3. Inside the filename.json, look for 
+3. Inside the `filename.json`, look for:
 ```
 "subgraphs": [
     {
@@ -73,7 +73,7 @@ flatc -b schema_path  filename.json
 ```
 
 **Original Audio Spectrogram model before transformation:**
-![audio_sepec](/pics/pic_9.png)
+![audio_sepec](/pics/pic_10.png)
 
 5. Convert the model into hex:
 ```
@@ -83,3 +83,4 @@ xxd -i model.tflite model.cc
 6. Exchange the model in your main.cpp with the new one. 
 
 
+> Dude, where's my car? :alien:
